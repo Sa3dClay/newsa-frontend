@@ -8,8 +8,13 @@ const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     const logout = () => {
-        Cookies.remove("authToken");
-        router.push("/auth/login");
+        const confirmLogout = window.confirm(
+            "Are you sure you want to logout?"
+        );
+        if (confirmLogout) {
+            Cookies.remove("authToken");
+            router.push("/auth/login");
+        }
     };
 
     return (
@@ -17,7 +22,9 @@ const Navbar = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     <div className="flex-shrink-0">
-                        <h2 className="text-white font-bold italic">NEWSA</h2>
+                        <h2 className="text-indigo-400 font-bold text-xl tracking-wider">
+                            NEWSA
+                        </h2>
                     </div>
                     <div className="-mr-2 flex items-center sm:hidden">
                         <button
@@ -78,7 +85,7 @@ const Navbar = () => {
                                 Settings
                             </Link>
                             <a
-                                className="px-3 py-2 mx-1 rounded-md text-sm font-medium text-red-500 hover:text-red-500 hover:bg-gray-800 focus:outline-none transition duration-150 ease-in-out cursor-pointer"
+                                className="px-3 py-2 mx-1 rounded-md text-sm font-medium text-red-400 hover:text-red-400 hover:bg-gray-800 focus:outline-none transition duration-150 ease-in-out cursor-pointer"
                                 onClick={logout}
                             >
                                 Logout

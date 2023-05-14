@@ -23,8 +23,9 @@ const Login = () => {
                 password,
             })
             .then((response) => {
-                // save token as cookie
-                Cookies.set("authToken", response.data.token, { expires: 7 });
+                const token = response.data.token;
+
+                Cookies.set("authToken", token, { expires: 7 });
 
                 router.push("/");
 

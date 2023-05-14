@@ -16,6 +16,7 @@ const Register = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         setErrors([]);
 
         if (password !== passwordConfirmation) {
@@ -31,7 +32,9 @@ const Register = () => {
                 password_confirmation: passwordConfirmation,
             })
             .then((response) => {
-                Cookies.set("authToken", response.data.token, { expires: 7 });
+                const token = response.data.token;
+
+                Cookies.set("authToken", token, { expires: 7 });
 
                 router.push("/");
 
