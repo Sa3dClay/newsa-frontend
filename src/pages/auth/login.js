@@ -1,7 +1,10 @@
 import axios from "axios";
+import Link from "next/link";
 import Cookies from "js-cookie";
+import { baseUrl } from "@/env";
 import { useRouter } from "next/router";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import GuestLayout from "@/layouts/GuestLayout";
 
 const Login = () => {
     const router = useRouter();
@@ -9,26 +12,18 @@ const Login = () => {
     const [errors, setErrors] = useState([]);
     const [password, setPassword] = useState("");
 
-    useEffect(() => {
-        const authToken = Cookies.get("authToken");
-        if (authToken) {
-            router.push("/");
-        }
-    }, []);
-
     const handleSubmit = (e) => {
         e.preventDefault();
 
         setErrors([]);
 
         axios
-            .post("http://127.0.0.1:8000/api/auth/login", {
+            .post(baseUrl + "/auth/login", {
                 email,
                 password,
             })
             .then((response) => {
-                console.log(response.data);
-
+                // save token as cookie
                 Cookies.set("authToken", response.data.token, { expires: 7 });
 
                 router.push("/");
@@ -60,9 +55,11 @@ const Login = () => {
     );
 
     return (
-        <div className="min-h-screen flex items-center justify-center">
-            <div className="max-w-md mx-auto">
-                <h2 className="text-2xl font-semibold mb-4">Login</h2>
+        <GuestLayout>
+            <div className="mx-4">
+                <h2 className="text-2xl font-semibold mb-4 text-indigo-400">
+                    Login
+                </h2>
 
                 {errors && errorView}
 
@@ -74,7 +71,7 @@ const Login = () => {
                         <input
                             id="email"
                             type="email"
-                            className="w-full border border-gray-300 rounded-md px-3 py-2"
+                            className="w-full border border-gray-300 rounded-md outline-none px-3 py-2"
                             placeholder="Enter your email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -89,7 +86,7 @@ const Login = () => {
                         <input
                             id="password"
                             type="password"
-                            className="w-full border border-gray-300 rounded-md px-3 py-2"
+                            className="w-full border border-gray-300 rounded-md outline-none px-3 py-2"
                             placeholder="Enter your password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
@@ -99,13 +96,23 @@ const Login = () => {
 
                     <button
                         type="submit"
-                        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
+                        className="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 transition-colors"
                     >
                         Login
                     </button>
+
+                    <p>
+                        Don't have an account?
+                        <Link
+                            href="/auth/register"
+                            className="px-2 text-indigo-500"
+                        >
+                            Register
+                        </Link>
+                    </p>
                 </form>
             </div>
-        </div>
+        </GuestLayout>
     );
 };
 

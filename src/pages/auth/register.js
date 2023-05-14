@@ -1,7 +1,10 @@
 import axios from "axios";
+import Link from "next/link";
 import Cookies from "js-cookie";
+import { baseUrl } from "@/env";
 import { useRouter } from "next/router";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import GuestLayout from "@/layouts/GuestLayout";
 
 const Register = () => {
     const router = useRouter();
@@ -11,16 +14,8 @@ const Register = () => {
     const [password, setPassword] = useState("");
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
-    useEffect(() => {
-        const authToken = Cookies.get("authToken");
-        if (authToken) {
-            router.push("/");
-        }
-    }, []);
-
     const handleSubmit = (e) => {
         e.preventDefault();
-
         setErrors([]);
 
         if (password !== passwordConfirmation) {
@@ -29,15 +24,13 @@ const Register = () => {
         }
 
         axios
-            .post("http://127.0.0.1:8000/api/auth/register", {
+            .post(baseUrl + "/auth/register", {
                 name,
                 email,
                 password,
                 password_confirmation: passwordConfirmation,
             })
             .then((response) => {
-                console.log(response.data);
-
                 Cookies.set("authToken", response.data.token, { expires: 7 });
 
                 router.push("/");
@@ -71,14 +64,16 @@ const Register = () => {
     );
 
     return (
-        <div className="min-h-screen flex items-center justify-center">
-            <div className="mx-auto">
-                <h2 className="text-2xl font-semibold mb-4">Registration</h2>
+        <GuestLayout>
+            <div className="mx-4">
+                <h2 className="text-2xl font-semibold mb-4 text-indigo-400">
+                    Registration
+                </h2>
 
                 {errors && errorView}
 
                 <form className="space-y-4" onSubmit={handleSubmit}>
-                    <div className="flex space-x-4">
+                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                         <div>
                             <label htmlFor="name" className="block mb-1">
                                 Name
@@ -108,9 +103,7 @@ const Register = () => {
                                 required
                             />
                         </div>
-                    </div>
 
-                    <div className="flex space-x-4">
                         <div>
                             <label htmlFor="password" className="block mb-1">
                                 Password
@@ -149,13 +142,23 @@ const Register = () => {
 
                     <button
                         type="submit"
-                        className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors"
+                        className="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 transition-colors"
                     >
                         Register
                     </button>
+
+                    <p>
+                        Already have an account?
+                        <Link
+                            href="/auth/login"
+                            className="px-2 text-indigo-500"
+                        >
+                            Login
+                        </Link>
+                    </p>
                 </form>
             </div>
-        </div>
+        </GuestLayout>
     );
 };
 
