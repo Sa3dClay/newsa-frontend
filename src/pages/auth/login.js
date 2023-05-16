@@ -47,9 +47,9 @@ const Login = () => {
         <div>
             {Object.keys(errors).map((key) => {
                 return (
-                    <span className="text-red-600" key={key}>
+                    <p className="text-red-600" key={key}>
                         {errors[key]}
-                    </span>
+                    </p>
                 );
             })}
         </div>
@@ -58,7 +58,7 @@ const Login = () => {
     return (
         <GuestLayout>
             <div className="mx-4">
-                <h2 className="text-2xl font-semibold mb-4 text-indigo-400">
+                <h2 className="text-2xl font-bold mb-4 text-indigo-400">
                     Login
                 </h2>
 

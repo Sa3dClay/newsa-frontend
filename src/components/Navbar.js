@@ -79,10 +79,10 @@ const Navbar = () => {
                                 Articles
                             </Link>
                             <Link
-                                href="/settings"
+                                href="/user/preferences"
                                 className="px-3 py-2 mx-1 rounded-md text-sm font-medium text-gray-500 hover:text-white hover:bg-gray-800 focus:outline-none transition duration-150 ease-in-out"
                             >
-                                Settings
+                                Preferences
                             </Link>
                             <a
                                 className="px-3 py-2 mx-1 rounded-md text-sm font-medium text-red-400 hover:text-red-400 hover:bg-gray-800 focus:outline-none transition duration-150 ease-in-out cursor-pointer"

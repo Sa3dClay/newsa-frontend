@@ -14,9 +14,9 @@ const AuthLayout = ({ children }) => {
 
     useEffect(() => {
         const authToken = Cookies.get("authToken");
-
         if (!authToken) {
             router.push("/auth/login");
+            return;
         }
 
         axios.defaults.headers.common["Authorization"] = `Bearer ${authToken}`;
