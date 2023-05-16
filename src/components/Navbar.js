@@ -73,7 +73,7 @@ const Navbar = () => {
                     >
                         <div className="flex items-center">
                             <Link
-                                href="/articles"
+                                href="/user/articles"
                                 className="px-3 py-2 mx-1 rounded-md text-sm font-medium text-gray-500 hover:text-white hover:bg-gray-800 focus:outline-none transition duration-150 ease-in-out"
                             >
                                 Articles

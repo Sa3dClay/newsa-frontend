@@ -6,7 +6,7 @@ import Loader from "@/components/UI/Loader";
 import Message from "@/components/UI/Message";
 import OptionSelection from "@/components/preferences/OptionSelection";
 
-const Home = () => {
+const Preferences = () => {
     const [sources, setSources] = useState([]);
     const [categories, setCategories] = useState([]);
     const [selectedSources, setSelectedSources] = useState([]);
@@ -116,4 +116,4 @@ const Home = () => {
     return <AuthLayout>{isLoading ? <Loader /> : preferencesView}</AuthLayout>;
 };
 
-export default Home;
+export default Preferences;
