@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const SearchBar = ({ onSearch }) => {
+const SearchBar = ({ onSearch, placeholderText }) => {
     const [searchQuery, setSearchQuery] = useState("");
 
     useEffect(() => {
@@ -19,7 +19,7 @@ const SearchBar = ({ onSearch }) => {
         <form className="flex my-4">
             <input
                 type="text"
-                placeholder="Search articles..."
+                placeholder={placeholderText}
                 value={searchQuery}
                 onChange={handleInputChange}
                 className="p-2 border border-gray-200 rounded-md outline-none flex-grow"
