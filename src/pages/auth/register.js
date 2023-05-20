@@ -1,7 +1,6 @@
 import axios from "axios";
 import Link from "next/link";
 import Cookies from "js-cookie";
-import { baseUrl } from "@/env";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import GuestLayout from "@/layouts/GuestLayout";
@@ -29,7 +28,7 @@ const Register = () => {
         }
 
         axios
-            .post(baseUrl + "/auth/register", {
+            .post(process.env.NEXT_PUBLIC_BASE_URL + "/auth/register", {
                 name,
                 email,
                 password,
@@ -37,11 +36,8 @@ const Register = () => {
             })
             .then((response) => {
                 const token = response.data.token;
-
                 Cookies.set("authToken", token, { expires: 7 });
-
                 router.push("/");
-
                 clearFormData();
             })
             .catch((error) => {
@@ -96,7 +92,6 @@ const Register = () => {
                                 required
                             />
                         </div>
-
                         <div>
                             <label htmlFor="email" className="block mb-1">
                                 Email
@@ -111,7 +106,6 @@ const Register = () => {
                                 required
                             />
                         </div>
-
                         <div>
                             <label htmlFor="password" className="block mb-1">
                                 Password
@@ -126,7 +120,6 @@ const Register = () => {
                                 required
                             />
                         </div>
-
                         <div>
                             <label
                                 htmlFor="password_confirmation"
@@ -147,7 +140,6 @@ const Register = () => {
                             />
                         </div>
                     </div>
-
                     <button
                         type="submit"
                         disabled={isLoading}
@@ -155,7 +147,6 @@ const Register = () => {
                     >
                         Register
                     </button>
-
                     <p>
                         Already have an account?
                         <Link

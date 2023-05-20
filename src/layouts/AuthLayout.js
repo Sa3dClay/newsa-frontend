@@ -1,6 +1,5 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import { baseUrl } from "@/env";
 import { useRouter } from "next/router";
 import Navbar from "@/components/Navbar";
 import Header from "@/components/Header";
@@ -23,7 +22,7 @@ const AuthLayout = ({ children }) => {
 
         axios.defaults.headers.common["Authorization"] = `Bearer ${authToken}`;
         axios
-            .get(baseUrl + "/auth/user")
+            .get(process.env.NEXT_PUBLIC_BASE_URL + "/auth/user")
             .then((res) => {
                 dispatch(setUser(res.data.user));
                 setIsLoading(false);
@@ -37,6 +36,7 @@ const AuthLayout = ({ children }) => {
         <>
             <Header />
             <Navbar />
+
             {isLoading ? (
                 <Loader />
             ) : (

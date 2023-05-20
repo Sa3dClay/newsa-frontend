@@ -1,5 +1,4 @@
 import axios from "axios";
-import { baseUrl } from "@/env";
 import { useEffect, useState } from "react";
 import AuthLayout from "@/layouts/AuthLayout";
 import Loader from "@/components/UI/Loader";
@@ -16,7 +15,7 @@ const Preferences = () => {
 
     useEffect(() => {
         axios
-            .get(baseUrl + "/news/preferences")
+            .get(process.env.NEXT_PUBLIC_BASE_URL + "/news/preferences")
             .then((res) => {
                 const preferences = res.data;
 
@@ -33,10 +32,9 @@ const Preferences = () => {
             });
 
         axios
-            .get(baseUrl + "/news/preferences/options")
+            .get(process.env.NEXT_PUBLIC_BASE_URL + "/news/preferences/options")
             .then((res) => {
                 const options = res.data;
-
                 setSources(options.sources);
                 setCategories(options.categories);
             })
@@ -61,12 +59,11 @@ const Preferences = () => {
 
     const handleFormSubmit = () => {
         axios
-            .post(baseUrl + "/news/preferences/save", {
+            .post(process.env.NEXT_PUBLIC_BASE_URL + "/news/preferences/save", {
                 preferred_sources: selectedSources,
                 preferred_categories: selectedCategories,
             })
             .then((res) => {
-                console.log(res.data);
                 setMessage({
                     text: "Your preferences have been saved successfully ✅",
                     type: "success",
@@ -74,6 +71,7 @@ const Preferences = () => {
             })
             .catch((err) => {
                 console.log(err.response);
+
                 setMessage({
                     text: "Sorry something went wrong while saving your preferences ❌",
                     type: "failure",
@@ -101,9 +99,11 @@ const Preferences = () => {
                 onSelectionChange={handleSourceSelectionChange}
             />
             <hr />
+
             {message.text && (
                 <Message type={message.type} text={message.text} />
             )}
+
             <button
                 className="my-4 bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded"
                 onClick={handleFormSubmit}

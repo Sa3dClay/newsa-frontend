@@ -1,5 +1,4 @@
 import axios from "axios";
-import { baseUrl } from "@/env";
 import Message from "../UI/Message";
 import { useEffect, useState } from "react";
 
@@ -10,7 +9,7 @@ const ArticleList = ({ articles, itemsPerPage, resetPage }) => {
 
     useEffect(() => {
         axios
-            .get(baseUrl + "/news/authors")
+            .get(process.env.NEXT_PUBLIC_BASE_URL + "/news/authors")
             .then((res) => {
                 setPreferredAuthors(res.data.preferred_authors);
             })
@@ -47,7 +46,7 @@ const ArticleList = ({ articles, itemsPerPage, resetPage }) => {
 
     const handleFollowAuthor = (authorName) => {
         axios
-            .post(baseUrl + "/news/authors/follow", { author_name: authorName })
+            .post(process.env.NEXT_PUBLIC_BASE_URL + "/news/authors/follow", { author_name: authorName })
             .then((res) => {
                 setPreferredAuthors([...preferredAuthors, authorName]);
 
@@ -67,7 +66,7 @@ const ArticleList = ({ articles, itemsPerPage, resetPage }) => {
 
     const handleUnfollowAuthor = (authorName) => {
         axios
-            .post(baseUrl + "/news/authors/unfollow", {
+            .post(process.env.NEXT_PUBLIC_BASE_URL + "/news/authors/unfollow", {
                 author_name: authorName,
             })
             .then((res) => {

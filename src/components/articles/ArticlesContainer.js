@@ -1,5 +1,4 @@
 import axios from "axios";
-import { baseUrl } from "@/env";
 import { useEffect, useState } from "react";
 import Loader from "@/components/UI/Loader";
 import SearchBar from "@/components/UI/SearchBar";
@@ -22,15 +21,16 @@ const ArticlesContainer = ({ newsUrl }) => {
     useEffect(() => {
         axios
             .get(
-                `${baseUrl + newsUrl}?q=${searchQuery}&source=${
-                    selectedFilters.source
-                }&from_date=${selectedFilters.from_date}&to_date=${
-                    selectedFilters.to_date
-                }`
+                `${
+                    process.env.NEXT_PUBLIC_BASE_URL + newsUrl
+                }?q=${searchQuery}&source=${selectedFilters.source}&from_date=${
+                    selectedFilters.from_date
+                }&to_date=${selectedFilters.to_date}`
             )
             .then((res) => {
                 const data = res.data;
                 setArticles(data.articles);
+
                 const uniqueSources = [
                     ...new Set(
                         data.articles

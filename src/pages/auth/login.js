@@ -1,7 +1,6 @@
 import axios from "axios";
 import Link from "next/link";
 import Cookies from "js-cookie";
-import { baseUrl } from "@/env";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import GuestLayout from "@/layouts/GuestLayout";
@@ -22,17 +21,14 @@ const Login = () => {
         setErrors([]);
 
         axios
-            .post(baseUrl + "/auth/login", {
+            .post(process.env.NEXT_PUBLIC_BASE_URL + "/auth/login", {
                 email,
                 password,
             })
             .then((response) => {
                 const token = response.data.token;
-
                 Cookies.set("authToken", token, { expires: 7 });
-
                 router.push("/");
-
                 clearFormData();
             })
             .catch((error) => {
@@ -49,7 +45,7 @@ const Login = () => {
     };
 
     const errorView = (
-        <div>
+        <div className="py-4">
             {Object.keys(errors).map((key) => {
                 return (
                     <p className="text-red-600" key={key}>
@@ -105,7 +101,6 @@ const Login = () => {
                     >
                         Login
                     </button>
-
                     <p>
                         Don't have an account?
                         <Link
