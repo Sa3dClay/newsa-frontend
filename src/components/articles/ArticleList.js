@@ -12,7 +12,6 @@ const ArticleList = ({ articles, itemsPerPage, resetPage }) => {
         axios
             .get(baseUrl + "/news/authors")
             .then((res) => {
-                console.log(res.data);
                 setPreferredAuthors(res.data.preferred_authors);
             })
             .catch((err) => {
@@ -20,14 +19,27 @@ const ArticleList = ({ articles, itemsPerPage, resetPage }) => {
             });
     }, []);
 
+    const sortedArticles = articles.sort((a, b) => {
+        const isAuthorAFollowed = preferredAuthors.includes(a.author);
+        const isAuthorBFollowed = preferredAuthors.includes(b.author);
+
+        if (isAuthorAFollowed && !isAuthorBFollowed) {
+            return -1;
+        } else if (!isAuthorAFollowed && isAuthorBFollowed) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
+
     useEffect(() => {
         setCurrentPage(1);
     }, [resetPage]);
 
-    const totalPages = Math.ceil(articles.length / itemsPerPage);
+    const totalPages = Math.ceil(sortedArticles.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    const displayedArticles = articles.slice(startIndex, endIndex);
+    const displayedArticles = sortedArticles.slice(startIndex, endIndex);
 
     const handlePageChange = (page) => {
         setCurrentPage(page);

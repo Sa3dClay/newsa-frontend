@@ -12,11 +12,15 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [errors, setErrors] = useState([]);
     const [password, setPassword] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        if (isLoading) return;
+
+        setIsLoading(true);
         setErrors([]);
 
         if (password !== passwordConfirmation) {
@@ -43,6 +47,7 @@ const Register = () => {
             .catch((error) => {
                 console.log(error.response);
 
+                setIsLoading(false);
                 setErrors(error.response.data.errors);
             });
     };
@@ -145,7 +150,8 @@ const Register = () => {
 
                     <button
                         type="submit"
-                        className="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 transition-colors"
+                        disabled={isLoading}
+                        className="bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 transition-colors disabled:bg-gray-300"
                     >
                         Register
                     </button>

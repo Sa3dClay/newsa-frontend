@@ -23,7 +23,7 @@ const Navbar = () => {
                 <div className="flex items-center justify-between h-16">
                     <div className="flex-shrink-0">
                         <h2 className="text-indigo-400 font-bold text-xl tracking-wider">
-                            NEWSA
+                            <Link href="/">NEWSA</Link>
                         </h2>
                     </div>
                     <div className="-mr-2 flex items-center sm:hidden">
